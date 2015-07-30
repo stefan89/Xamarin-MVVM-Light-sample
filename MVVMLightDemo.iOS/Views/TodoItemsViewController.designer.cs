@@ -16,6 +16,9 @@ namespace MVVMLightDemo.iOS
 		UIKit.UIButton buttonAddItem { get; set; }
 
 		[Outlet]
+		UIKit.UIButton buttonNavigateToSecondPage { get; set; }
+
+		[Outlet]
 		UIKit.UITableView tableViewTodoItems { get; set; }
 		
 		void ReleaseDesignerOutlets ()
@@ -23,6 +26,11 @@ namespace MVVMLightDemo.iOS
 			if (buttonAddItem != null) {
 				buttonAddItem.Dispose ();
 				buttonAddItem = null;
+			}
+
+			if (buttonNavigateToSecondPage != null) {
+				buttonNavigateToSecondPage.Dispose ();
+				buttonNavigateToSecondPage = null;
 			}
 
 			if (tableViewTodoItems != null) {

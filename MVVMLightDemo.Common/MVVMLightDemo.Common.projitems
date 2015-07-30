@@ -11,9 +11,11 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Models\TodoItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TodoItemsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\PageConstants.cs" />
   </ItemGroup>
 </Project>

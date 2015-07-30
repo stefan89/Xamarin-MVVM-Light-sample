@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Views;
+using GalaSoft.MvvmLight.Command;
+
+using Microsoft.Practices.ServiceLocation;
 
 namespace MVVMLightDemo.Common
 {
 	public class TodoItemsViewModel : ViewModelBase
 	{
 		public RelayCommand AddNewTodoCommand { get; set; }
+
+		public RelayCommand NavigateToSecondPageCommand { get; set; }
 
 		public RelayCommand<TodoItem> SelectTodoItemCommand { get; set; }
 
@@ -26,6 +31,11 @@ namespace MVVMLightDemo.Common
 
 			AddNewTodoCommand = new RelayCommand (() => {
 				TodoItems.Add (new TodoItem { Name = "Button clicked item", Description = "Demo item"});
+			});
+
+			NavigateToSecondPageCommand = new RelayCommand (() => {
+				var navavigationService = ServiceLocator.Current.GetInstance<INavigationService>();
+				navavigationService.NavigateTo(PageConstants.SecondPage);
 			});
 
 			SelectTodoItemCommand = new RelayCommand<TodoItem> ((todoItem) => {

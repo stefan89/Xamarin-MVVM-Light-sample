@@ -30,6 +30,7 @@ namespace MVVMLightDemo.iOS
 			_observableTableViewController.SelectionChanged += OnItemSelected;
 			
 			buttonAddItem.SetCommand ("TouchUpInside", _todoItemsViewModel.AddNewTodoCommand);
+			buttonNavigateToSecondPage.SetCommand ("TouchUpInside", _todoItemsViewModel.NavigateToSecondPageCommand);
 		}
 
 		UITableViewCell CreateTodoItemCell(NSString reusableCellId)

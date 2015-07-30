@@ -6,13 +6,17 @@ using Android.Widget;
 using MVVMLightDemo.Common;
 
 using GalaSoft.MvvmLight.Helpers;
+using Microsoft.Practices.ServiceLocation;
+using GalaSoft.MvvmLight.Views;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace MVVMLightDemo.Droid
 {
 	[Activity (Label = "MVVMLightDemo", MainLauncher = true, Icon = "@drawable/icon")]
-	public class TodoItemsActivity : Activity
+	public class TodoItemsActivity : ActivityBase
 	{
 		TodoItemsViewModel _todoItemsViewModel;
+		static bool _initialized;
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -21,6 +25,17 @@ namespace MVVMLightDemo.Droid
 			Title = "Todo items";
 
 			SetContentView (Resource.Layout.TodoItemsActivity);
+
+			if (!_initialized)
+			{
+				_initialized = true;
+				ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+				var navigationService = new NavigationService();
+				navigationService.Configure(PageConstants.SecondPage, typeof(SecondActivity));
+
+				SimpleIoc.Default.Register<INavigationService>(() => navigationService);
+			}
 
 			_todoItemsViewModel = new TodoItemsViewModel ();
 
@@ -31,6 +46,9 @@ namespace MVVMLightDemo.Droid
 
 			Button buttonAddItem = FindViewById<Button> (Resource.Id.buttonAddItem);
 			buttonAddItem.SetCommand ("Click", _todoItemsViewModel.AddNewTodoCommand);
+
+			Button buttonNavigateToSecondPage = FindViewById<Button> (Resource.Id.buttonNavigateToSecondPage);
+			buttonNavigateToSecondPage.SetCommand ("Click", _todoItemsViewModel.NavigateToSecondPageCommand);
 		}
 
 		View GetTodoItems(int position, TodoItem todoItem, View convertView)

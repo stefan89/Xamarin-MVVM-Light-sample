@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TodoItemsViewController">
             <connections>
                 <outlet property="buttonAddItem" destination="ZRI-lL-ah4" id="KXb-Tv-wdA"/>
+                <outlet property="buttonNavigateToSecondPage" destination="wUi-e6-4lY" id="BpG-m7-7UO"/>
                 <outlet property="tableViewTodoItems" destination="5b4-Ct-Vg7" id="oOl-7I-gq7"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
             </connections>
@@ -16,27 +17,38 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5b4-Ct-Vg7">
-                    <rect key="frame" x="0.0" y="66" width="768" height="912"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5b4-Ct-Vg7">
+                    <rect key="frame" x="0.0" y="66" width="768" height="852"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRI-lL-ah4">
-                    <rect key="frame" x="0.0" y="976" width="768" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRI-lL-ah4">
+                    <rect key="frame" x="0.0" y="926" width="768" height="48"/>
                     <state key="normal" title="Add item to list">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUi-e6-4lY">
+                    <rect key="frame" x="0.0" y="976" width="768" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="gbU-af-cye"/>
+                    </constraints>
+                    <state key="normal" title="Navigate to second page">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="wUi-e6-4lY" firstAttribute="top" secondItem="ZRI-lL-ah4" secondAttribute="bottom" constant="2" id="0TE-zb-bg6"/>
                 <constraint firstAttribute="trailing" secondItem="ZRI-lL-ah4" secondAttribute="trailing" id="5Mi-13-gYI"/>
-                <constraint firstItem="ZRI-lL-ah4" firstAttribute="top" secondItem="5b4-Ct-Vg7" secondAttribute="bottom" constant="-2" id="6hV-s6-cNx"/>
-                <constraint firstAttribute="bottom" secondItem="5b4-Ct-Vg7" secondAttribute="bottom" constant="46" id="8dT-gW-v5t"/>
+                <constraint firstItem="wUi-e6-4lY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NS5-6F-1hA"/>
                 <constraint firstAttribute="trailing" secondItem="5b4-Ct-Vg7" secondAttribute="trailing" id="Npy-TE-Tg7"/>
                 <constraint firstItem="5b4-Ct-Vg7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="66" id="OhJ-ix-3Rp"/>
                 <constraint firstItem="ZRI-lL-ah4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PIi-nn-OJJ"/>
+                <constraint firstAttribute="trailing" secondItem="wUi-e6-4lY" secondAttribute="trailing" id="Yye-ee-6kP"/>
                 <constraint firstItem="5b4-Ct-Vg7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c3V-OE-xWn"/>
-                <constraint firstAttribute="bottom" secondItem="ZRI-lL-ah4" secondAttribute="bottom" id="mK5-9b-5pN"/>
+                <constraint firstItem="ZRI-lL-ah4" firstAttribute="top" secondItem="5b4-Ct-Vg7" secondAttribute="bottom" constant="8" id="rkJ-b2-lRZ"/>
+                <constraint firstAttribute="bottom" secondItem="wUi-e6-4lY" secondAttribute="bottom" id="rpm-Ef-7XA"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
