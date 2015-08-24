@@ -1,11 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
-
-using Android.OS;
+﻿using Android.OS;
 using Android.App;
-using Android.Content;
 
 namespace MVVMLightDemo.Droid
 {

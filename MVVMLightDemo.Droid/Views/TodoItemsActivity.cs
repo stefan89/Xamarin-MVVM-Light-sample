@@ -2,13 +2,15 @@
 using Android.App;
 using Android.Views;
 using Android.Widget;
+using Android.Support.V4.Widget;
 
-using MVVMLightDemo.Common;
+using Microsoft.Practices.ServiceLocation;
 
 using GalaSoft.MvvmLight.Helpers;
-using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Ioc;
+
+using MVVMLightDemo.Common;
 
 namespace MVVMLightDemo.Droid
 {
@@ -16,6 +18,7 @@ namespace MVVMLightDemo.Droid
 	public class TodoItemsActivity : ActivityBase
 	{
 		TodoItemsViewModel _todoItemsViewModel;
+		SwipeRefreshLayout swipeRefreshLayout;
 		static bool _initialized;
 
 		protected override void OnCreate (Bundle bundle)
@@ -49,8 +52,18 @@ namespace MVVMLightDemo.Droid
 
 			Button buttonNavigateToSecondPage = FindViewById<Button> (Resource.Id.buttonNavigateToSecondPage);
 			buttonNavigateToSecondPage.SetCommand ("Click", _todoItemsViewModel.NavigateToSecondPageCommand);
-		}
 
+			swipeRefreshLayout = FindViewById<SwipeRefreshLayout> (Resource.Id.refresher);
+			swipeRefreshLayout.SetCommand ("Refresh", _todoItemsViewModel.RefreshTodoItemsCommand);
+
+			//Obtain message when refresh is finished
+			GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<PullToRefreshMessage> (this, (pullToRefreshMessage) => {
+				if (pullToRefreshMessage.IsFinished) {
+					swipeRefreshLayout.Refreshing = false;
+				}
+			});
+		}
+			
 		View GetTodoItems(int position, TodoItem todoItem, View convertView)
 		{
 			if (convertView == null)

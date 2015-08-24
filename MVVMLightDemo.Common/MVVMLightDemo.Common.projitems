@@ -12,10 +12,12 @@
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
     <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Messengers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Models\TodoItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TodoItemsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\PageConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messengers\PullToRefreshMessage.cs" />
   </ItemGroup>
 </Project>

@@ -3,11 +3,16 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <ListView
-        android:id="@+id/listViewTodoItems"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresher"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+        <ListView
+            android:id="@+id/listViewTodoItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
     <Button
         android:id="@+id/buttonAddItem"
         android:layout_width="fill_parent"

@@ -1,7 +1,10 @@
-﻿using UIKit;
+﻿using System;
+
+using UIKit;
 using Foundation;
 
 using GalaSoft.MvvmLight.Helpers;
+using GalaSoft.MvvmLight.Messaging;
 
 using MVVMLightDemo.Common;
 
@@ -9,11 +12,13 @@ namespace MVVMLightDemo.iOS
 {
 	public partial class TodoItemsViewController : UIViewController
 	{
-		TodoItemsViewModel _todoItemsViewModel;
+		public TodoItemsViewModel _todoItemsViewModel;
 		ObservableTableViewController<TodoItem> _observableTableViewController;
+		UIRefreshControl _refreshControl;
 
 		public TodoItemsViewController () : base ("TodoItemsViewController", null)
 		{
+			_todoItemsViewModel = new TodoItemsViewModel ();
 		}
 
 		public override void ViewDidLoad ()
@@ -22,15 +27,37 @@ namespace MVVMLightDemo.iOS
 
 			Title = "Todo items";
 
-			_todoItemsViewModel = new TodoItemsViewModel ();
+			_refreshControl = new UIRefreshControl ();
+			_refreshControl.AttributedTitle = new NSAttributedString ("Refreshing", new UIStringAttributes ());
+			tableViewTodoItems.AddSubview (_refreshControl);
 
 			//Create bindings to ViewModel
 			_observableTableViewController = _todoItemsViewModel.TodoItems.GetController (CreateTodoItemCell, BindTodoItemCell);
 			_observableTableViewController.TableView = tableViewTodoItems;
 			_observableTableViewController.SelectionChanged += OnItemSelected;
-			
+
 			buttonAddItem.SetCommand ("TouchUpInside", _todoItemsViewModel.AddNewTodoCommand);
 			buttonNavigateToSecondPage.SetCommand ("TouchUpInside", _todoItemsViewModel.NavigateToSecondPageCommand);
+
+			_refreshControl.SetCommand ("ValueChanged", _todoItemsViewModel.RefreshTodoItemsCommand);
+
+			//OR
+			//_refreshControl.ValueChanged += (object sender, EventArgs e) => 
+			//{
+			//	_todoItemsViewModel.ValueChangedCommand.Execute(null);
+			//};
+
+			//Obtain message when refresh is finished
+			Messenger.Default.Register<PullToRefreshMessage> (this, (pullToRefreshMessage) => {
+				if (pullToRefreshMessage.IsFinished) {
+					_refreshControl.EndRefreshing ();
+				}
+			});
+		}
+
+		void StopRefreshing()
+		{
+			_refreshControl.EndRefreshing ();
 		}
 
 		UITableViewCell CreateTodoItemCell(NSString reusableCellId)
@@ -49,9 +76,10 @@ namespace MVVMLightDemo.iOS
 			cell.DetailTextLabel.Text = todoItem.Description;
 		}
 
-		void OnItemSelected(object sender, System.EventArgs e){
+		void OnItemSelected(object sender, EventArgs e){
 			
 			_todoItemsViewModel.SelectTodoItemCommand.Execute (_observableTableViewController.SelectedItem);
 		}
 	}
 }
+//http://stackoverflow.com/questions/28151572/binding-a-property-to-a-viewmodel-with-mvvmlight-and-xamarin-ios

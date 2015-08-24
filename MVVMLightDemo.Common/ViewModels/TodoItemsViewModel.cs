@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 using Microsoft.Practices.ServiceLocation;
 
@@ -11,11 +12,41 @@ namespace MVVMLightDemo.Common
 {
 	public class TodoItemsViewModel : ViewModelBase
 	{
-		public RelayCommand AddNewTodoCommand { get; set; }
+		public RelayCommand AddNewTodoCommand { 
+			get {
+				return new RelayCommand (() => {
+					TodoItems.Add (new TodoItem { Name = "Button clicked item", Description = "Demo item" });
+				});
+			}
+		}
 
-		public RelayCommand NavigateToSecondPageCommand { get; set; }
+		public RelayCommand NavigateToSecondPageCommand {
+			get {
+				return new RelayCommand (() => {
+					var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
+					navigationService.NavigateTo(PageConstants.SecondPage);
+				});
+			}
+		}
 
-		public RelayCommand<TodoItem> SelectTodoItemCommand { get; set; }
+		public RelayCommand<TodoItem> SelectTodoItemCommand {
+			get {
+				return new RelayCommand<TodoItem> ((todoItem) => {
+					Console.WriteLine (todoItem.Name + " clicked");
+				});
+			}
+		}
+
+		public RelayCommand RefreshTodoItemsCommand { 
+			get {
+				return new RelayCommand (() => {
+					TodoItems.Add (new TodoItem { Name = "Pull to refresh item", Description = "Demo item"});
+
+					//Send message that refresh is finished
+					Messenger.Default.Send (new PullToRefreshMessage { IsFinished = true });
+				});
+			}
+		}
 
 		public ObservableCollection<TodoItem> TodoItems { get; set; }
 
@@ -28,19 +59,6 @@ namespace MVVMLightDemo.Common
 				new TodoItem { Name = "Rekeningen betalen", Description = "Openstaande rekeningen betalen" },
 				new TodoItem { Name = "Cadeau kopen", 		Description = "Verjaardagscadeau kopen voor Pietje" }
 			};
-
-			AddNewTodoCommand = new RelayCommand (() => {
-				TodoItems.Add (new TodoItem { Name = "Button clicked item", Description = "Demo item"});
-			});
-
-			NavigateToSecondPageCommand = new RelayCommand (() => {
-				var navavigationService = ServiceLocator.Current.GetInstance<INavigationService>();
-				navavigationService.NavigateTo(PageConstants.SecondPage);
-			});
-
-			SelectTodoItemCommand = new RelayCommand<TodoItem> ((todoItem) => {
-				Console.WriteLine (todoItem.Name + " clicked");
-			});
 		}
 	}
 }
