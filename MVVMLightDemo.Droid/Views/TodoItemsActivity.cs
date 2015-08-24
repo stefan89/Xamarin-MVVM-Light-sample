@@ -38,6 +38,7 @@ namespace MVVMLightDemo.Droid
 				navigationService.Configure(PageConstants.SecondPage, typeof(SecondActivity));
 
 				SimpleIoc.Default.Register<INavigationService>(() => navigationService);
+				SimpleIoc.Default.Register<IDialogService, DialogService>();
 			}
 
 			_todoItemsViewModel = new TodoItemsViewModel ();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
@@ -31,8 +30,9 @@ namespace MVVMLightDemo.Common
 
 		public RelayCommand<TodoItem> SelectTodoItemCommand {
 			get {
-				return new RelayCommand<TodoItem> ((todoItem) => {
-					Console.WriteLine (todoItem.Name + " clicked");
+				return new RelayCommand<TodoItem> (async(todoItem) => {
+					var dialogService = ServiceLocator.Current.GetInstance<IDialogService>();
+					await dialogService.ShowMessageBox (todoItem.Name + " clicked", "Item clicked");
 				});
 			}
 		}

@@ -40,6 +40,7 @@ namespace MVVMLightDemo.iOS
 			navigationService.Configure(PageConstants.SecondPage, typeof(SecondViewController));
 
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
+			SimpleIoc.Default.Register<IDialogService, DialogService>();
 
 			Window.MakeKeyAndVisible ();
 			return true;
