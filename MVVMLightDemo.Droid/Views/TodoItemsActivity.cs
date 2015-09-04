@@ -18,7 +18,7 @@ namespace MVVMLightDemo.Droid
 	public class TodoItemsActivity : ActivityBase
 	{
 		TodoItemsViewModel _todoItemsViewModel;
-		SwipeRefreshLayout swipeRefreshLayout;
+		SwipeRefreshLayout _swipeRefreshLayout;
 		static bool _initialized;
 
 		protected override void OnCreate (Bundle bundle)
@@ -54,13 +54,13 @@ namespace MVVMLightDemo.Droid
 			Button buttonNavigateToSecondPage = FindViewById<Button> (Resource.Id.buttonNavigateToSecondPage);
 			buttonNavigateToSecondPage.SetCommand ("Click", _todoItemsViewModel.NavigateToSecondPageCommand);
 
-			swipeRefreshLayout = FindViewById<SwipeRefreshLayout> (Resource.Id.refresher);
-			swipeRefreshLayout.SetCommand ("Refresh", _todoItemsViewModel.RefreshTodoItemsCommand);
+			_swipeRefreshLayout = FindViewById<SwipeRefreshLayout> (Resource.Id.refresher);
+			_swipeRefreshLayout.SetCommand ("Refresh", _todoItemsViewModel.RefreshTodoItemsCommand);
 
 			//Obtain message when refresh is finished
 			GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<PullToRefreshMessage> (this, (pullToRefreshMessage) => {
 				if (pullToRefreshMessage.IsFinished) {
-					swipeRefreshLayout.Refreshing = false;
+					_swipeRefreshLayout.Refreshing = false;
 				}
 			});
 		}
