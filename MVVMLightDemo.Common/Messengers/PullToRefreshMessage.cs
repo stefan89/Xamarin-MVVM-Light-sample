@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MVVMLightDemo.Common
+﻿namespace MVVMLightDemo.Common
 {
 	public class PullToRefreshMessage
 	{

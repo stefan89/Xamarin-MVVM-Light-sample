@@ -12,7 +12,7 @@ namespace MVVMLightDemo.iOS
 {
 	public partial class TodoItemsViewController : UIViewController
 	{
-		public TodoItemsViewModel _todoItemsViewModel;
+		TodoItemsViewModel _todoItemsViewModel;
 		ObservableTableViewController<TodoItem> _observableTableViewController;
 		UIRefreshControl _refreshControl;
 
